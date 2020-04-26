@@ -1,11 +1,20 @@
-#include <string>
-
 #include "format.h"
+
+#include <string>
 
 using std::string;
 
-// TODO: Complete this helper function
-// INPUT: Long int measuring seconds
-// OUTPUT: HH:MM:SS
-// REMOVE: [[maybe_unused]] once you define the function
-string Format::ElapsedTime(long seconds[[maybe_unused]]) { return string(); }
+std::string Format::zero_padding(std::string time_segment) {
+  constexpr auto padding_size = 2;
+  if (time_segment.length() < 2) {
+    time_segment.insert(time_segment.begin(), padding_size - time_segment.size(),
+                        '0');
+  }
+  return time_segment;
+}
+
+std::string Format::ElapsedTime(long seconds) {
+  return zero_padding(std::to_string(seconds / 3600)) + ":" +
+         zero_padding(std::to_string((seconds / 60) % 60)) + ":" +
+         zero_padding(std::to_string(seconds % 60));
+}
